@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,3 +18,6 @@
 
 </body>
 </html>
+=======
+<script src="script.js"></script>
+>>>>>>> a824d04c612ff4ec012e6c4e692b93a380b5fc23
