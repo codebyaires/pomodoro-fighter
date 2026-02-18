@@ -12,7 +12,11 @@
 
     <h1>Pomodoro Fighter</h1>
     <p>Se você está vendo isso, o PHP funcionou!</p>
-    
+
+   <h1 id="timerDisplay">00:00</h1>
+   <input type="number" id="timeInput">
+   <button id="btnStart">Start</button>
+
     <script src="script.js"></script>
 
 </body>
