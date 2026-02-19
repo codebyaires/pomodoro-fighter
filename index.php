@@ -17,7 +17,6 @@
 <body>
 
     <h1>Pomodoro Fighter</h1>
-    <p>Se você está vendo isso, o PHP funcionou!</p>
 
    <h1 id="timerDisplay">00:00</h1>
    <P id="session">Digite quantos minutos será sua sessão de estudos: </P>
