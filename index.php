@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <title>Pomodoro Fighter</title>
     <style>
-        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        body { background-color: #121212; color: white; font-family: sans-serif; text-align: center; padding-top: 25px; }
         h1 { font-size: 50px; }
+
+        #timerDisplay {
+            font-size: 120px;
+            border: 5px solid white; 
+            border-radius: 80px; 
+            padding: 20px 40px; 
+            display: inline-block;
+            margin-top: 15px;
+        }
         #session 
         {
              color: yellow;
