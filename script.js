@@ -26,8 +26,21 @@ btnStart.addEventListener('click', function(){
         let minutosAtuais = Math.floor(totalTime / 60);
         let segundosAtuais = totalTime % 60;
 
-        // Troquei o console.log pela injeção direta no HTML. Apenas isso.
-        display.innerText = minutosAtuais + ":" + segundosAtuais;
+        // Cria as variáveis de textolet textoMinutos = minutosAtuais;
+        let textoMinutos = minutosAtuais;
+        let textoSegundos = segundosAtuais;
+
+        // Pergunta: Minuto é menor que 10? Se sim, gruda um "0" na frente.
+        if (minutosAtuais < 10) { 
+             textoMinutos = "0" + minutosAtuais;
+    }
+        // Pergunta: Segundo é menor que 10? Se sim, gruda um "0" na frente.
+        if (segundosAtuais < 10) {
+             textoSegundos = "0" + segundosAtuais;
+    }
+
+        // Injeta na tela a versão com os textos corrigidos
+        display.innerText = textoMinutos + ":" + textoSegundos;
         
         // Stop machine IF
         if (totalTime <= 0) {
