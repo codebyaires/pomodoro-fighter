@@ -11,8 +11,14 @@
 <body>
 
     <h1>Pomodoro Fighter</h1>
-    <p>Se você está vendo isso, o PHP funcionou!</p>
-    
+
+   <h1 id="timerDisplay">00:00</h1>
+   <p id="session">Digite quantos minutos será sua sessão de estudos: </p>
+   <input type="number" id="timeInput">
+   <button id="btnStart">Start</button>
+
+   <audio id="meuAudio" src="gatilho.mp3"></audio>
+
     <script src="script.js"></script>
 
 </body>
