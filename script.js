@@ -5,11 +5,14 @@ const btnStart = document.getElementById('btnStart');
 
 console.log(display, inputTime, btnStart);
 
+const somGatilho = new Audio('gatilho.mp3');
 let temporizador; 
 
 // 2. THE CLICK EVENT
 btnStart.addEventListener('click', function(){
-
+    
+    // Puxa o aúdio do gatilho assim que o úsuario da o 'click'
+    somGatilho.play();
     // Limpa qualquer sessão antiga antes de começar.
     clearInterval(temporizador); 
 
