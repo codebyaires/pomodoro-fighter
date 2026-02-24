@@ -4,40 +4,63 @@ const btnStart = document.getElementById('btnStart');
 const somGatilho = document.getElementById('meuAudio');
 
 let temporizador; 
+let estaRodando = false;
+let totalTime = 0;
 
-// EVENTO DE CLIQUE
 btnStart.addEventListener('click', function(){
 
-    // Toca o som do gatilho
+    // 1. É UM START NOVO? (Se totalTime for 0, precisamos ler o input e validar)
+    if (totalTime === 0) {
+        let valorDigitado = inputTime.value;
+        let minutes = Number(valorDigitado);
+
+        // BARREIRAS DE SEGURANÇA
+        if (valorDigitado === "" || isNaN(minutes) || minutes <= 0 || minutes > 300) {
+            alert("Por favor, insira um tempo válido entre 1 e 300 minutos!");
+            return; // Para tudo e nem muda o botão
+        }
+        totalTime = minutes * 60; // Define o tempo global
+    }
+
+    // 2. O INTERRUPTOR PAUSE/PLAY (Agora sim, depois de validar)
+    if (estaRodando === false) {
+        btnStart.innerText = "Pause";
+        btnStart.style.backgroundColor = "#ff9800"; // Laranja
+        estaRodando = true;
+    } else {
+        btnStart.innerText = "Resume";
+        btnStart.style.backgroundColor = "#4CAF50"; // Verde
+        estaRodando = false;
+        clearInterval(temporizador);
+        return; // Pausa o motor e para o código por aqui
+    }
+
+    // 3. MOTOR E AÇÃO IMEDIATA
     somGatilho.currentTime = 0; 
     somGatilho.play();
+    clearInterval(temporizador); // Limpa resquícios por segurança
 
-    // Limpa qualquer sessão antiga antes de começar.
-    clearInterval(temporizador); 
+    const atualizarTela = (tempo) => {
+        let m = Math.floor(tempo / 60);
+        let s = tempo % 60;
+        display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+    };
+    
+    atualizarTela(totalTime);
 
-    let minutes = Number(inputTime.value);
-    let totalTime = minutes * 60;
-
-    // Ignição do Motor (Loop Contínuo)
     temporizador = setInterval(function () {
+        totalTime--; 
+        atualizarTela(totalTime);
         
-        totalTime = totalTime - 1;
-
-        let minutosAtuais = Math.floor(totalTime / 60);
-        let segundosAtuais = totalTime % 60;
-
-        // Formatação visual (Operador Ternário para deixar o código limpo)
-        let textoMinutos = minutosAtuais < 10 ? "0" + minutosAtuais : minutosAtuais;
-        let textoSegundos = segundosAtuais < 10 ? "0" + segundosAtuais : segundosAtuais;
-
-        // Injeta o tempo na tela
-        display.innerText = textoMinutos + ":" + textoSegundos;
-        
-        // Para a máquina quando chegar em zero
         if (totalTime <= 0) {
             clearInterval(temporizador);
             console.log("O tempo acabou!");
+
+            // Reseta o botão e o estado para a próxima sessão
+            btnStart.innerText = "Start";
+            btnStart.style.backgroundColor = "#4CAF50";
+            estaRodando = false;
+            totalTime = 0; // Zera a memória para permitir um novo Start
          }     
     }, 1000);
-
 });
