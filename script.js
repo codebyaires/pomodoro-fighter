@@ -1,33 +1,55 @@
-// 1. Bridges with HTML (Always on top)
 const display = document.getElementById('timerDisplay');
 const inputTime = document.getElementById('timeInput');
 const btnStart = document.getElementById('btnStart');
+const somGatilho = document.getElementById('meuAudio');
 
-console.log(display, inputTime, btnStart);
+let temporizador; 
 
-// 2. THE CLICK EVENT
 btnStart.addEventListener('click', function(){
 
-    let minutes = Number(inputTime.value);
-    console.log('O usuário deseja estudar: ', minutes, ' minutos');
+    let valorDigitado = inputTime.value;
+    let minutes = Number(valorDigitado);
+
+    // BARREIRAS DE SEGURANÇA
+    if (valorDigitado === "" || isNaN(minutes)) {
+        alert("Insira um dígito numérico!");
+        return; 
+    }
+    if (minutes <= 0) {
+        alert("Por favor, digite um tempo maior que 0!");
+        return;
+    }
+    if (minutes > 300) {
+        alert("O limite máximo é de 300 minutos!");
+        return;
+    }
+
+    // AÇÃO IMEDIATA
+    somGatilho.currentTime = 0; 
+    somGatilho.play();
+    clearInterval(temporizador); 
 
     let totalTime = minutes * 60;
 
-    // Engine Ignition, Continuous Loop
-    let temporizador = setInterval(function () {
-        
-        totalTime = totalTime - 1;
+    // REAÇÃO VISUAL INSTANTÂNEA
+    // (Isso evita que o relógio demore 1s para atualizar após o clique)
+    const atualizarTela = (tempo) => {
+        let m = Math.floor(tempo / 60);
+        let s = tempo % 60;
+        display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+    };
+    
+    atualizarTela(totalTime); // Atualiza agora!
 
-        let minutosAtuais = Math.floor(totalTime / 60);
-        let segundosAtuais = totalTime % 60;
+    // MOTOR
+    temporizador = setInterval(function () {
+        totalTime--; // Abreviação de totalTime = totalTime - 1
 
-        console.log(minutosAtuais, segundosAtuais);
+        atualizarTela(totalTime);
         
-        // Stop machine IF
         if (totalTime <= 0) {
             clearInterval(temporizador);
             console.log("O tempo acabou!");
          }     
     }, 1000);
-
 });
