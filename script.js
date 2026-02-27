@@ -7,6 +7,29 @@ let temporizador;
 let estaRodando = false;
 let totalTime = 0;
 
+const atualizarTela = (tempo) => {
+    let m = Math.floor(tempo / 60);
+    let s = tempo % 60;
+    display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+};
+
+inputTime.addEventListener('input', function() {
+    if (estaRodando === true) {
+        return; 
+    }
+
+    let valorDigitado = inputTime.value;
+    let minutes = Number(valorDigitado);
+    
+    if (valorDigitado === "" || isNaN(minutes) || minutes <= 0 || minutes > 300) {
+        display.innerText = "00:00";
+        return;
+    }
+
+    let totalSegundos = minutes * 60;
+    atualizarTela(totalSegundos);
+});
+
 btnStart.addEventListener('click', function(){
 
     // 1. É UM START NOVO? (Se totalTime for 0, precisamos ler o input e validar)
@@ -39,12 +62,6 @@ btnStart.addEventListener('click', function(){
     somGatilho.currentTime = 0; 
     somGatilho.play();
     clearInterval(temporizador); // Limpa resquícios por segurança
-
-    const atualizarTela = (tempo) => {
-        let m = Math.floor(tempo / 60);
-        let s = tempo % 60;
-        display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-    };
     
     atualizarTela(totalTime);
 
