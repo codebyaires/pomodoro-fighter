@@ -1,12 +1,16 @@
 const display = document.getElementById('timerDisplay');
+const textoSessao = document.getElementById('session');
 const inputTime = document.getElementById('timeInput');
 const btnStart = document.getElementById('btnStart');
 const btnStop = document.getElementById('btnStop');
 const somGatilho = document.getElementById('meuAudio');
+const somAlarme = document.getElementById('somAlarme');
 
 let temporizador; 
 let estaRodando = false;
 let totalTime = 0;
+let modoFoco = true; // Começa sempre como 'Foco' (true) e vira 'Descanso' (false)
+let tempoFocoOriginal = 0; // Vai guardar o tempo digitado para calcular os 20% depois
 
 const atualizarTela = (tempo) => {
     let h = Math.floor(tempo / 3600);
@@ -53,7 +57,13 @@ btnStart.addEventListener('click', function(){
             alert("Por favor, insira um tempo válido entre 1 e 300 minutos!");
             return; // Para tudo e nem muda o botão
         }
-        totalTime = minutes * 60; // Define o tempo global
+             totalTime = minutes * 60; // Define o tempo global
+
+        tempoFocoOriginal = totalTime;
+
+        textoSessao.innerText = "Tempo de Foco 🔥";
+        textoSessao.style.color = "#00e676"; // Verde
+        inputTime.style.display = "none";    // Faz a caixa de digitar sumir
     }
 
     // 2. O INTERRUPTOR PAUSE/PLAY (Agora sim, depois de validar)
@@ -76,19 +86,54 @@ btnStart.addEventListener('click', function(){
     
     atualizarTela(totalTime);
 
-    temporizador = setInterval(function () {
+        temporizador = setInterval(function () {
         totalTime--; 
         atualizarTela(totalTime);
         
+        // 1. O TEMPO ACABOU?
         if (totalTime <= 0) {
-            clearInterval(temporizador);
-            console.log("O tempo acabou!");
+            
+            // 2. ERA TEMPO DE FOCO?
+            if (modoFoco === true) {
+                console.log("Foco acabou! Iniciando descanso...");
+                
+                // Toca o gongo
+                somAlarme.currentTime = 0; 
+                somAlarme.play();
 
-            // Reseta o botão e o estado para a próxima sessão
-            btnStart.innerText = "Start";
-            btnStart.style.backgroundColor = "#4CAF50";
-            estaRodando = false;
-            totalTime = 0; // Zera a memória para permitir um novo Start
+                // Vira a chave para descanso
+                modoFoco = false; 
+
+                // Atualiza a interface para Descanso
+                textoSessao.innerText = "Tempo de Descanso ☕";
+                textoSessao.style.color = "#81d4fa"; // Um azul claro bacana
+
+                // Calcula os 20% e dá o novo tempo para o relógio
+                totalTime = Math.floor(tempoFocoOriginal * 0.2);                
+            } 
+            // 3. SE NÃO ERA FOCO, É PORQUE O DESCANSO ACABOU
+            else {
+                console.log("Descanso acabou! Fim da sessão.");
+                
+                // Para o motor
+                clearInterval(temporizador);
+                
+                somAlarme.currentTime = 0; 
+                somAlarme.play();
+
+                // Reseta tudo para uma nova luta
+                btnStart.innerText = "Start";
+                btnStart.style.backgroundColor = "#4CAF50";
+                estaRodando = false;
+                totalTime = 0; 
+                modoFoco = true; // Volta a ser Foco para a próxima vez
+                document.body.style.backgroundColor = "#121212"; // Volta a cor original do fundo
+
+                // Restaura a interface inicial
+                textoSessao.innerText = "Digite quantos minutos será sua sessão de estudos:";
+                textoSessao.style.color = "#ffca28"; // Amarelo
+                inputTime.style.display = "inline-block"; // Traz a caixa de volta
+             }
          }     
     }, 1000);
 });
@@ -98,11 +143,17 @@ btnStop.addEventListener('click', function() {
 
     estaRodando = false;
     totalTime = 0;
+    modoFoco = true;
 
     display.innerText = "00:00";
     inputTime.value = "";
+    document.body.style.backgroundColor = "#121212";
+
+    // Restaura a interface inicial caso o usuário desista
+    textoSessao.innerText = "Digite quantos minutos será sua sessão de estudos:";
+    textoSessao.style.color = "#ffca28"; 
+    inputTime.style.display = "inline-block"; 
 
     btnStart.innerText = "Start";
     btnStart.style.backgroundColor = "#4CAF50";
-
 });
