@@ -79,15 +79,25 @@ btnStart.addEventListener('click', function(){
         return; // Pausa o motor e para o código por aqui
     }
 
+   // ... dentro do seu btnStart.addEventListener ...
+
     // 3. MOTOR E AÇÃO IMEDIATA
     somGatilho.currentTime = 0; 
     somGatilho.play();
-    clearInterval(temporizador); // Limpa resquícios por segurança
+    clearInterval(temporizador); 
     
-    atualizarTela(totalTime);
+    // O SEGREDO: Definimos o momento exato em que o tempo deve acabar
+    let targetTime = Date.now() + (totalTime * 1000); 
 
-        temporizador = setInterval(function () {
-        totalTime--; 
+    temporizador = setInterval(function () {
+        // Calcula quanto tempo falta comparando agora com o alvo
+        let agora = Date.now();
+        let diferenca = targetTime - agora;
+        totalTime = Math.round(diferenca / 1000); // Converte milissegundos para segundos
+        
+        // Se o tempo chegou a 0 ou menos, atualizamos a tela para 0
+        if (totalTime < 0) totalTime = 0;
+        
         atualizarTela(totalTime);
         
         // 1. O TEMPO ACABOU?
@@ -95,46 +105,39 @@ btnStart.addEventListener('click', function(){
             
             // 2. ERA TEMPO DE FOCO?
             if (modoFoco === true) {
-                console.log("Foco acabou! Iniciando descanso...");
-                
-                // Toca o gongo
                 somAlarme.currentTime = 0; 
                 somAlarme.play();
-
-                // Vira a chave para descanso
                 modoFoco = false; 
-
-                // Atualiza a interface para Descanso
                 textoSessao.innerText = "Tempo de Descanso ☕";
-                textoSessao.style.color = "#81d4fa"; // Um azul claro bacana
+                textoSessao.style.color = "#00e5ff"; 
 
-                // Calcula os 20% e dá o novo tempo para o relógio
-                totalTime = Math.floor(tempoFocoOriginal * 0.2);                
+                // Calcula os 20%
+                let novoTempoDescanso = Math.floor(tempoFocoOriginal * 0.2);
+                
+                // ATUALIZA O ALVO: O novo tempo de descanso começa AGORA
+                targetTime = Date.now() + (novoTempoDescanso * 1000);
+                totalTime = novoTempoDescanso;
             } 
+            
             // 3. SE NÃO ERA FOCO, É PORQUE O DESCANSO ACABOU
             else {
-                console.log("Descanso acabou! Fim da sessão.");
-                
-                // Para o motor
                 clearInterval(temporizador);
-                
                 somAlarme.currentTime = 0; 
                 somAlarme.play();
-
+                // ... (seu código de reset continua o mesmo aqui) ...
+                
                 // Reseta tudo para uma nova luta
                 btnStart.innerText = "Start";
                 btnStart.style.backgroundColor = "#4CAF50";
                 estaRodando = false;
                 totalTime = 0; 
-                modoFoco = true; // Volta a ser Foco para a próxima vez
-                document.body.style.backgroundColor = "#121212"; // Volta a cor original do fundo
-
-                // Restaura a interface inicial
+                modoFoco = true;
+                document.body.style.backgroundColor = "#121212";
                 textoSessao.innerText = "Digite quantos minutos será sua sessão de estudos:";
-                textoSessao.style.color = "#ffca28"; // Amarelo
-                inputTime.style.display = "inline-block"; // Traz a caixa de volta
-             }
-         }     
+                textoSessao.style.color = "#ffca28"; 
+                inputTime.style.display = "inline-block"; 
+            }
+        }     
     }, 1000);
 });
 
