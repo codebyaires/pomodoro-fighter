@@ -82,20 +82,22 @@
             transform: translateY(-2px); 
         }
 
-        /* BOTÃO STOP ROBUSTO */
+        /* BOTÃO STOP ALINHADO */
         #btnStop {
-            padding: 15px 20px; 
-            font-size: 20px;    
+            padding: 10px 25px; /* Igual ao Start para não ficar torto */
+            font-size: 18px;    /* Igual ao Start */
             font-weight: bold;
-            border-radius: 8px; 
+            border-radius: 5px; /* Igual ao Start */
             border: none;
             background-color: #ff1a1a; 
             color: white;
             cursor: pointer;
             transition: 0.2s;
-            display: block;     
-            margin: 15px auto 0 auto; 
+            
+            display: inline-block; /* Fica na mesma linha */
+            margin-left: 10px; /* Empurra um pouquinho para a direita para não grudar no Start */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            vertical-align: top; /* Garante o alinhamento perfeito na linha */
         }
 
         #btnStop:hover {
@@ -115,11 +117,11 @@
     <div style="margin-top: 15px;">
         <input type="number" id="timeInput" min="0" max="300" placeholder="Ex: 25">
         <button id="btnStart">Start</button>
+        <button id="btnStop">Stop</button>
     </div>
 
-    <button id="btnStop">Stop</button>
-
     <audio id="meuAudio" src="gatilho.mp3"></audio>
+    <audio id="somAlarme" src="alarme.mp3"></audio>
     <script src="script.js"></script>
 
 </body>
