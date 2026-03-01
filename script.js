@@ -1,6 +1,7 @@
 const display = document.getElementById('timerDisplay');
 const inputTime = document.getElementById('timeInput');
 const btnStart = document.getElementById('btnStart');
+const btnStop = document.getElementById('btnStop');
 const somGatilho = document.getElementById('meuAudio');
 
 let temporizador; 
@@ -8,9 +9,19 @@ let estaRodando = false;
 let totalTime = 0;
 
 const atualizarTela = (tempo) => {
-    let m = Math.floor(tempo / 60);
+    let h = Math.floor(tempo / 3600);
+    let m = Math.floor((tempo % 3600) / 60);
     let s = tempo % 60;
-    display.innerText = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+
+    let formatoH = h < 10 ? "0" + h : h;
+    let formatoM = m < 10 ? "0" + m : m;
+    let formatoS = s < 10 ? "0" + s : s;
+
+    if (h > 0) {
+        display.innerText = formatoH + ":" + formatoM + ":" + formatoS;
+    } else {
+        display.innerText = formatoM + ":" + formatoS;
+    }
 };
 
 inputTime.addEventListener('input', function() {
@@ -80,4 +91,18 @@ btnStart.addEventListener('click', function(){
             totalTime = 0; // Zera a memória para permitir um novo Start
          }     
     }, 1000);
+});
+
+btnStop.addEventListener('click', function() {
+    clearInterval(temporizador);
+
+    estaRodando = false;
+    totalTime = 0;
+
+    display.innerText = "00:00";
+    inputTime.value = "";
+
+    btnStart.innerText = "Start";
+    btnStart.style.backgroundColor = "#4CAF50";
+
 });
