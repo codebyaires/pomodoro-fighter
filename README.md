@@ -1,6 +1,8 @@
 # 🥊 Pomodoro Fighter
 
-> **Status:** 🚧 Em Construção
+▶️ **[ACESSE O POMODORO FIGHTER AO VIVO AQUI!](https://codebyaires.github.io/pomodoro-fighter/)**
+
+> **Status:** 🚀 Live / Ativo
 
 **Objetivo:** Criar uma ferramenta de foco personalizada que respeita o ritmo do usuário. Diferente dos timers padrões engessados, o Pomodoro Fighter calcula o tempo de descanso com base no esforço real (20% do tempo de foco) e registra a evolução em um banco de dados para acompanhamento de produtividade.
 
@@ -17,8 +19,10 @@
 - **Feedback Visual Em Tempo Real:** Alteração de cores e avisos na tela para indicar claramente em qual ciclo o usuário está (Foco ou Descanso).
 - **Design Minimalista:** Input numérico blindado contra erros de digitação, display gigante para fácil visualização e botões responsivos.
 
-## 🗄️ Arquitetura de Back-end e Banco de Dados (Em Implementação)
-A infraestrutura está sendo preparada para persistência de dados utilizando **PHP puro (PDO/MySQLi)** e **MySQL**:
+## 🗄️ Arquitetura (Back-end em Evolução)
+*Nota: A versão atual está rodando como uma aplicação Front-end estática no GitHub Pages. A infraestrutura abaixo está em fase de planejamento para futura integração Full-Stack.*
+
+A arquitetura planejada visa a persistência de dados utilizando **PHP puro (PDO/MySQLi)** e **MySQL**:
 - **Banco de Dados Relacional:** Tabela `sessoes_estudo` estruturada com ID (PK), minutos de foco, minutos de descanso e timestamp (DATETIME).
 - **Salvamento Assíncrono:** Integração via JavaScript `fetch` API (AJAX) para comunicar com o back-end e salvar os dados silenciosamente, sem recarregar a página.
 - **Gatilho de Sucesso (Anti-Cheat):** O sistema é programado para registrar no banco de dados *apenas* as sessões de foco que chegarem a zero. Resets e desistências no meio do ciclo são ignorados.
@@ -27,7 +31,7 @@ A infraestrutura está sendo preparada para persistência de dados utilizando **
 ## 📜 Regras de Desenvolvimento (Minhas Leis)
 1. **GitHub First:** Nada existe fora do repositório. Commits semânticos (`feat:`, `fix:`, `style:`, `docs:`) são estritamente obrigatórios.
 2. **KISS (Keep It Simple, Stupid):** Sem frameworks pesados ou complexidade desnecessária. Apenas HTML, CSS, JS Vanilla e PHP puro.
-3. **Funcionalidade > Beleza:** A prioridade é a lógica do motor, as validações de segurança e a arquitetura do banco. O CSS refinado é a última etapa.
+3. **Funcionalidade > Beleza:** A prioridade é a lógica do motor, as validações de segurança e a arquitetura do banco. O CSS refinado é a etapa final.
 
 ---
 *Desenvolvido durante minhas sessões de Deep Work.* 🚀
