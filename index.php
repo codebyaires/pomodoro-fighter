@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>Pomodoro Fighter</title>
     <style>
+
         /* RESET BÁSICO */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body { 
             background-color: #121212; 
             color: white; 
-            font-family: sans-serif; 
+            /* Fonte mais limpa e moderna do sistema */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
             padding-top: 50px; 
         }
@@ -19,22 +21,25 @@
         h1 { 
             font-size: 50px; 
             margin-bottom: 20px;
+            letter-spacing: 2px; /* Espaçamento leve para elegância */
         }
 
         /* O RELÓGIO GIGANTE */
         #timerDisplay {
-            font-size: 200px;
+            font-size: 170px;
             font-weight: bold;
             border: 5px solid white; 
-            border-radius: 100px; /* Borda redonda */
-            padding: 20px 40px; /* Espaço interno para não esmagar os números */
-            display: inline-block; /* Abraça apenas o texto */
+            background-color: #1a1a1a; /* Fundo sutilmente mais claro que o body */
+            border-radius: 100px; 
+            padding: 20px 40px; 
+            display: inline-block; 
             margin-bottom: 20px; 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); /* Sombra para destacar do fundo */
         }
 
         /* FRASE DE INSTRUÇÃO */
         #session {
-            color: yellow;
+            color: #ffca28; /* Amarelo mais suave e agradável */
             font-weight: bold;
             font-size: 20px;
             margin-bottom: 15px;
@@ -45,10 +50,17 @@
             padding: 10px;
             font-size: 18px;
             border-radius: 5px;
-            border: none;
+            border: 2px solid transparent; /* Espaço reservado para a borda verde */
             width: 120px;
             text-align: center;
             margin-right: 10px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        /* Efeito de foco quando clica para digitar */
+        #timeInput:focus {
+            border: 2px solid #4CAF50;
         }
 
         /* BOTÃO START */
@@ -58,14 +70,37 @@
             font-weight: bold;
             border-radius: 5px;
             border: none;
-            background-color: #4CAF50; /* Verde estilo Play */
+            background-color: #4CAF50; 
             color: white;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        #btnStart:hover {
-            background-color: #45a049; /* Fica mais escuro ao passar o mouse */
+         #btnStart:hover {
+            background-color: #2E7D32; /* Um verde bem mais escuro e perceptível */
+            transform: translateY(-2px); 
+        }
+
+        /* BOTÃO STOP ROBUSTO */
+        #btnStop {
+            padding: 15px 20px; 
+            font-size: 20px;    
+            font-weight: bold;
+            border-radius: 8px; 
+            border: none;
+            background-color: #ff1a1a; 
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: block;     
+            margin: 15px auto 0 auto; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #btnStop:hover {
+            background-color: #990000; 
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -82,8 +117,9 @@
         <button id="btnStart">Start</button>
     </div>
 
-    <audio id="meuAudio" src="gatilho.mp3"></audio>
+    <button id="btnStop">Stop</button>
 
+    <audio id="meuAudio" src="gatilho.mp3"></audio>
     <script src="script.js"></script>
 
 </body>
