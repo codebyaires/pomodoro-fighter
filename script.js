@@ -11,6 +11,7 @@ let estaRodando = false;
 let totalTime = 0;
 let modoFoco = true; // Começa sempre como 'Foco' (true) e vira 'Descanso' (false)
 let tempoFocoOriginal = 0; // Vai guardar o tempo digitado para calcular os 20% depois
+let historicoSessoes = [];
 
 const atualizarTela = (tempo) => {
     let h = Math.floor(tempo / 3600);
@@ -111,6 +112,11 @@ btnStart.addEventListener('click', function(){
                 textoSessao.innerText = "Tempo de Descanso ☕";
                 textoSessao.style.color = "#00e5ff"; 
 
+                // Transforma os segundos de volta em volta em minutos, exibe um histórico de sessões concluídas
+                let minutosEstudados = Math.floor(tempoFocoOriginal / 60); 
+                historicoSessoes.push(minutosEstudados);
+                console.log(historicoSessoes);
+            
                 // Calcula os 20%
                 let novoTempoDescanso = Math.floor(tempoFocoOriginal * 0.2);
                 
